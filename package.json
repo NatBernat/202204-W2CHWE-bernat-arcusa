@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest",
+    "prepare": "husky install",
+    "sass-launch": "sass sass/index.scss css/index.css",
+    "sass-watch": "sass --watch sass/index.scss css/index.css"
   },
   "repository": {
     "type": "git",
@@ -16,5 +19,13 @@
   "bugs": {
     "url": "https://github.com/NatBernat/202204-W2CHWE-bernat-arcusa/issues"
   },
-  "homepage": "https://github.com/NatBernat/202204-W2CHWE-bernat-arcusa#readme"
+  "homepage": "https://github.com/NatBernat/202204-W2CHWE-bernat-arcusa#readme",
+  "devDependencies": {
+    "eslint": "^8.13.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.26.0",
+    "husky": "^7.0.0",
+    "jest": "^27.5.1"
+  }
 }
