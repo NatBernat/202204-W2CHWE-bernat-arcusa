@@ -5,7 +5,7 @@ class Cell {
 
   alive = false;
 
-  constructor(positionX, positionY, alive) {
+  constructor(positionX, positionY) {
     this.alive = false;
     this.positionX = positionX;
     this.postionY = positionY;
