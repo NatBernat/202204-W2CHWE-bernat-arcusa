@@ -16,6 +16,7 @@ const gameOfLife = () => {
       this.postionY = positionY;
     }
   }
+
   const createBoard = () => {
     for (let x = 0; x < rows; x++) {
       newBoard.push([]);
@@ -32,64 +33,104 @@ const gameOfLife = () => {
     newBoard[1][2].alive = true;
   };
 
-  createBoard();
-  firstTurn();
+  const checkNeighbours = () => {
+    for (let i = 0; i < rows; i++) {
+      for (let j = 0; j < columns; j++) {
+        newBoard[i][j].aliveNeighbours = 0;
+        if (typeof newBoard[i - 1] !== "undefined") {
+          if (typeof newBoard[i - 1][j - 1] !== "undefined") {
+            if (newBoard[i - 1][j - 1].alive === true) {
+              newBoard[i][j].aliveNeighbours += 1;
+            }
+          }
+        }
+        if (typeof newBoard[i - 1] !== "undefined") {
+          if (typeof newBoard[i - 1][j] !== "undefined") {
+            if (newBoard[i - 1][j].alive === true) {
+              newBoard[i][j].aliveNeighbours += 1;
+            }
+          }
+        }
+        if (typeof newBoard[i - 1] !== "undefined") {
+          if (typeof newBoard[i - 1][j + 1] !== "undefined") {
+            if (newBoard[i - 1][j + 1].alive === true) {
+              newBoard[i][j].aliveNeighbours += 1;
+            }
+          }
+        }
+        if (typeof newBoard[i] !== "undefined") {
+          if (typeof newBoard[i][j - 1] !== "undefined") {
+            if (newBoard[i][j - 1].alive === true) {
+              newBoard[i][j].aliveNeighbours += 1;
+            }
+          }
+        }
 
-  do {
-    const checkNeighbours = () => {
-      for (let i = 0; i < rows; i++) {
-        for (let j = 0; j < columns; j++) {
-          newBoard[i][j].aliveNeighbours = 0;
+        if (typeof newBoard[i] !== "undefined") {
+          if (typeof newBoard[i][j + 1] !== "undefined") {
+            if (newBoard[i][j + 1].alive === true) {
+              newBoard[i][j].aliveNeighbours += 1;
+            }
+          }
+        }
 
-          if (newBoard[i - 1][j - 1].alive === true) {
-            newBoard[i][j].aliveNeighbours += 1;
+        if (typeof newBoard[i + 1] !== "undefined") {
+          if (typeof newBoard[i + 1][j - 1] !== "undefined") {
+            if (newBoard[i + 1][j - 1].alive === true) {
+              newBoard[i][j].aliveNeighbours += 1;
+            }
           }
-          if (newBoard[i - 1][j].alive === true) {
-            newBoard[i][j].aliveNeighbours += 1;
+        }
+        if (typeof newBoard[i + 1] !== "undefined") {
+          if (typeof newBoard[i + 1][j] !== "undefined") {
+            if (newBoard[i + 1][j].alive === true) {
+              newBoard[i][j].aliveNeighbours += 1;
+            }
           }
-          if (newBoard[i - 1][j + 1].alive === true) {
-            newBoard[i][j].aliveNeighbours += 1;
-          }
-          if (newBoard[i][j - 1].alive === true) {
-            newBoard[i][j].aliveNeighbours += 1;
-          }
-          if (newBoard[i][j + 1].alive === true) {
-            newBoard[i][j].aliveNeighbours += 1;
-          }
-          if (newBoard[i + 1][j - 1].alive === true) {
-            newBoard[i][j].aliveNeighbours += 1;
-          }
-          if (newBoard[i + 1][j].alive === true) {
-            newBoard[i][j].aliveNeighbours += 1;
-          }
-          if (newBoard[i + 1][j + 1].alive === true) {
-            newBoard[i][j].aliveNeighbours += 1;
-          }
-
-          if (
-            newBoard[i][j].alive === false &&
-            newBoard[i][j].aliveNeighbours > 2
-          ) {
-            newBoard[i][j].alive = true;
-          } else if (
-            newBoard[i][j].alive === true &&
-            newBoard[i][j].aliveNeighbours === 2
-          ) {
-            newBoard[i][j].alive = true;
-          } else if (
-            newBoard[i][j].alive === true &&
-            newBoard[i][j].aliveNeighbours === 3
-          ) {
-            newBoard[i][j].alive = true;
-          } else {
-            newBoard[i][j].alive = false;
+        }
+        if (typeof newBoard[i + 1] !== "undefined") {
+          if (typeof newBoard[i + 1][j + 1] !== "undefined") {
+            if (newBoard[i + 1][j + 1].alive === true) {
+              newBoard[i][j].aliveNeighbours += 1;
+            }
           }
         }
       }
-    };
+    }
+  };
+
+  const nextTurnAlives = () => {
+    for (let i = 0; i < rows; i++) {
+      for (let j = 0; j < columns; j++) {
+        if (
+          newBoard[i][j].alive === false &&
+          newBoard[i][j].aliveNeighbours > 2
+        ) {
+          newBoard[i][j].alive = true;
+        } else if (
+          newBoard[i][j].alive === true &&
+          newBoard[i][j].aliveNeighbours === 2
+        ) {
+          newBoard[i][j].alive = true;
+        } else if (
+          newBoard[i][j].alive === true &&
+          newBoard[i][j].aliveNeighbours === 3
+        ) {
+          newBoard[i][j].alive = true;
+        } else {
+          newBoard[i][j].alive = false;
+        }
+      }
+    }
+  };
+
+  createBoard();
+  firstTurn();
+  while (true) {
     checkNeighbours();
+    nextTurnAlives();
     createBoard();
-  } while (newBoard.aliveNeighbours === false);
+  }
 };
 
 gameOfLife();
